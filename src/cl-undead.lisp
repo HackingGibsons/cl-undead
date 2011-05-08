@@ -8,3 +8,12 @@ given by `rules' in the form (((CSS-PATH :selector :description) TREE-TRANSFORMA
                               ((CSS-PATH :AWESOME) LESS-AWESOME-TREE-TRANSFORMATION))"
   :undefined)
 
+(defun node-named (name)
+  (lambda (node)
+    (string-equal (pt-name node) name)))
+
+(defun find-in-tree (tree pred)
+  (cond ((null tree) nil)
+        ((funcall pred tree) `(,tree))
+        (t (loop for child in (pt-children tree)
+              if child appending (find-in-tree child pred)))))
