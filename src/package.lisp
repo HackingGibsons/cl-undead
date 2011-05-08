@@ -1,5 +1,6 @@
 ;;;; package.lisp
 
 (defpackage #:cl-undead
-  (:use #:cl))
+  (:use #:closure-html #:cl))
+
 
