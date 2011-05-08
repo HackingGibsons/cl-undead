@@ -7,4 +7,5 @@
                                      (:file "fixtures" :depends-on ("utils"))
                                      (:file "suites" :depends-on ("fixtures" "utils"))
 
-                                     (:file "html" :depends-on ("suites"))))))
+                                     (:file "html" :depends-on ("suites"))
+                                     (:file "driver" :depends-on ("suites"))))))

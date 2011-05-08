@@ -6,7 +6,8 @@
   "Process the `template' according to the list of transformations
 given by `rules' in the form (((CSS-PATH :selector :description) TREE-TRANSFORMATION)
                               ((CSS-PATH :AWESOME) LESS-AWESOME-TREE-TRANSFORMATION))"
-  :undefined)
+  (let ((parsed (chtml:parse template nil)))
+    parsed))
 
 (defun node-named (name)
   (lambda (node)
