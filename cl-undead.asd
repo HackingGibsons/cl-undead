@@ -5,9 +5,11 @@
   :depends-on (#:closure-html
                #:cl-ppcre
                #:drakma)
-  :components ((:file "package")
-               (:file "cl-undead")))
+  :components ((:module "src"
+                        :components ((:file "package")
+                                     (:file "cl-undead"
+                                            :depends-on ("package"))))))
 
-(defmethod perform ((o asdf:test-op) (c (eql (find-system :cl-undead))))
+(defmethod perform ((o asdf:test-op) (c (eql (asdf:find-system :cl-undead))))
   (funcall (intern "RUN!" :5am)
            (intern "MAIN" :cl-undead-test)))
