@@ -5,6 +5,7 @@
   :depends-on (#:closure-html
                #:cl-ppcre
                #:drakma)
+  :in-order-to ((test-op (load-op cl-undead-test)))
   :components ((:module "src"
                         :components ((:file "package")
                                      (:file "cl-undead"
