@@ -3,5 +3,8 @@
   :components ((:module "test"
                         :components ((:file "packages")
                                      (:file "utils" :depends-on ("packages"))
-                                     (:file "fixtures" :depends-on ("packages"))
-                                     (:file "suites" :depends-on ("packages"))))))
+
+                                     (:file "fixtures" :depends-on ("utils"))
+                                     (:file "suites" :depends-on ("fixtures" "utils"))
+
+                                     (:file "html" :depends-on ("suites"))))))

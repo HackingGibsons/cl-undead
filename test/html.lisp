@@ -1,6 +1,5 @@
 (in-package :cl-undead-test)
 (in-suite main)
 
-(with-fixture html/simple ()
-  (test can-haz-html
-    (is (> 0 (length template-data)))))
+(test (can-haz-html :fixture html/simple)
+  (is (> (length template-data) 0)))
