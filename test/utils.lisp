@@ -1,3 +1,5 @@
+(in-package :cl-undead-test)
+
 (defmacro file-string (filename)
   (let ((g!f (gensym "f-stream"))
         (g!len (gensym "len"))
