@@ -8,5 +8,5 @@
   (is (find-in-tree parsed-data (node-named :html))))
 
 (test (can-find-children :fixture html/simple)
-  (is (eql 2 (length (find-in-tree parsed-data (node-named :span)))))
+  (is (eql 1 (length (find-in-tree parsed-data (node-named :body)))))
   (is (eql 2 (length (find-in-tree parsed-data (node-named :span))))))
