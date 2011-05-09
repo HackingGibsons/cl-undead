@@ -2,23 +2,28 @@
 
 (in-package #:cl-undead)
 
+(defun process-rule (tree rule)
+  "Process the parsed template `tree' according to the `rule'
+in the format of (search-rule . process-function-or-nil)
+A processing function of nil will remove the matching node from the tree"
+  (unless rule (return-from process-rule))
+  (destructuring-bind (path . proc) rule
+    (let ((matches (find-in-tree tree path)))
+      (mapc #'(lambda (match)
+                (if proc
+                    (funcall proc match)
+                    (let* ((parent (pt-parent match)) (siblings (pt-children parent)))
+                      (setf (pt-children parent)
+                            (remove-if (lambda (node) (eql node match)) siblings)))))
+            matches))))
+
 (defun process-template (template &rest rules)
   "Process the `template' according to the list of transformations
 given by `rules' in the form (((CSS-PATH :selector :description) TREE-TRANSFORMATION)
                               ((CSS-PATH :AWESOME) LESS-AWESOME-TREE-TRANSFORMATION))"
-  (let ((parsed (chtml:parse template nil))
-        matches)
+  (let ((parsed (chtml:parse template nil)))
     (dolist (rule rules)
-      (unless rule (return))
-      (destructuring-bind (path . proc) rule
-        (setf matches (find-in-tree parsed path))
-        (mapc #'(lambda (match)
-                  (if proc
-                      (funcall proc match)
-                      (let* ((parent (pt-parent match)) (siblings (pt-children parent)))
-                        (setf (pt-children parent)
-                              (remove-if (lambda (node) (eql node match)) siblings)))))
-              matches)))
+      (process-rule parsed rule))
     parsed))
 
 (defun node-named (name)
