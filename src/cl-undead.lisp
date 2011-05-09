@@ -45,6 +45,22 @@ given by `rules' in the form (((CSS-PATH :selector :description) TREE-TRANSFORMA
   "Get the attribute `attr' of `node' or nil"
   (getf (node-attrs node) attr))
 
+(defun node-data-nodes (node &optional first)
+  "Get the children of `node' that are named :pcdate
+If `first' is non-nil return the car of the result (used in `node-data'"
+  (funcall (if first 'car 'identity)
+           (remove-if-not (make-named-p :pcdata)
+                          (pt-children node))))
+
+(defun node-has-data-p (node)
+  "Does the given node have only one data node?"
+  (= 1 (length (node-data-nodes node))))
+
+(defun node-data (node)
+  "Get the text content of the only data node child of `node'"
+  (and (node-has-data-p node)
+       (pt-attrs (node-data-nodes node t))))
+
 ;; find-in-tree and friends
 (defun make-named-p (name)
   "Make a predicate matching nodes named `name'"
