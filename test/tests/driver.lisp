@@ -3,7 +3,14 @@
 
 (test (apply-no-rules-using-path :fixture html/simple+lhtml)
   (let ((new-parsed (process-template template-file nil)))
+
     (is (equal (to-lhtml parsed-data) (to-lhtml new-parsed)))))
+
+(test (identity-should-do-nothing-using-string :fixture html/simple+lhtml)
+  (let ((new-parsed (process-template template-data (cons (make-named-p :span) 'identity))))
+
+    (is (equal (to-lhtml parsed-data)
+               (to-lhtml new-parsed)))))
 
 (test (can-remove-node-by-id :fixture html/simple+lhtml)
   (flet ((remove-node (node) (declare (ignorable node)) nil))
