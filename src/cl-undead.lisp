@@ -1,6 +1,7 @@
 ;;;; cl-undead.lisp
 (in-package #:cl-undead)
 
+;; Rule application
 (defun remove-node (node)
   "Remove the given node from the tree containing it"
   (let* ((parent (pt-parent node)) (siblings (pt-children parent)))
@@ -29,9 +30,20 @@ given by `rules' in the form (((CSS-PATH :selector :description) TREE-TRANSFORMA
       (process-rule parsed rule))
     parsed))
 
-(defun node-named (name)
+;; Helpers
+(defun get-node-id (node)
+  (let ((attrs (pt-attrs node)))
+    (and (listp attrs)
+         (getf attrs :id))))
+
+;; find-in-tree and friends
+(defun make-named-p (name)
   (lambda (node)
     (string-equal (pt-name node) name)))
+
+(defun make-id-p (id)
+  (lambda (node)
+    (string-equal (get-node-id node) id)))
 
 (defun find-in-tree (tree pred)
   (cond ((null tree) nil)
