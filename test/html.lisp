@@ -13,7 +13,17 @@
 
 (test (can-find-node-by-id :fixture html/simple)
    (let ((spans-test (find-in-tree parsed-data (make-id-p :test)))
-         (spans-wrapped (find-in-tree parsed-data (make-id-p :wrapped))))
+         (spans-wrapped (find-in-tree parsed-data (make-id-p :wrapped)))
+         (spans-all (find-in-tree parsed-data (make-named-p :span))))
 
     (is-false (null spans-test))
-    (is-false (null spans-wrapped))))
+    (is-false (null spans-wrapped))
+
+    (is (= 2 (length spans-all)))
+    (is (= 1 (length spans-wrapped)))
+    (is (= 1 (length spans-test)))
+
+    (is-false (equal (car spans-test) (car spans-wrapped)))
+
+    (is (member (car spans-test) spans-all))
+    (is (member (car spans-wrapped) spans-all))))
