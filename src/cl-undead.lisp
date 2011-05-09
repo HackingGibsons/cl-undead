@@ -32,14 +32,17 @@ given by `rules' in the form (((CSS-PATH :selector :description) TREE-TRANSFORMA
 
 ;; Helpers
 (defun node-id (node)
+  "The value of the id attribute of `node'"
   (node-attr node :id))
 
 (defun node-attrs (node)
+  "The plist of all attributes of `node'"
   (let ((attrs (pt-attrs node)))
     (and (listp attrs)
          attrs)))
 
 (defun node-attr (node attr)
+  "Get the attribute `attr' of `node' or nil"
   (getf (node-attrs node) attr))
 
 ;; find-in-tree and friends
