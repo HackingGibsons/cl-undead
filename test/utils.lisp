@@ -8,3 +8,14 @@
      (let* ((,g!len (file-length ,g!f)) (,g!out (make-string ,g!len)))
        (values ,g!out
                (read-sequence ,g!out ,g!f))))))
+
+(defmacro def-mixture (name arglist mixins &body body)
+  "Make a fixture mixing in the fixture macros."
+  (let ((callchain '(eval-body)))
+      (dolist (mixin (reverse mixins) callchain)
+        (setf callchain `(,mixin ,callchain)))
+
+      `(def-fixture ,name ,arglist
+         (macrolet ((eval-body () '(progn ,@body)))
+           ,callchain))))
+
