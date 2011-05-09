@@ -16,8 +16,7 @@ A processing function of nil will remove the matching node from the tree"
   (destructuring-bind (path . proc) rule
     (let ((matches (find-in-tree tree path)))
       (mapc #'(lambda (match)
-                (if proc
-                    (funcall proc match)
+                (or (and proc (funcall proc match))
                     (remove-node match)))
             matches))))
 
