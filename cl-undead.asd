@@ -8,8 +8,9 @@
   :in-order-to ((test-op (load-op cl-undead-test)))
   :components ((:module "src"
                         :components ((:file "package")
-                                     (:file "cl-undead"
-                                            :depends-on ("package"))))))
+                                     (:file "utils" :depends-on ("package"))
+
+                                     (:file "cl-undead" :depends-on ("utils"))))))
 
 (defmethod perform ((o asdf:test-op) (c (eql (asdf:find-system :cl-undead))))
   (funcall (intern "RUN!" :5am)
