@@ -11,11 +11,11 @@
 
 (defmacro def-mixture (name arglist mixins &body body)
   "Make a fixture mixing in the fixture macros."
-  (let ((callchain '(eval-body)))
+  (let* ((g!eval-body (gensym "eval-body"))
+         (callchain `(,g!eval-body)))
       (dolist (mixin (reverse mixins) callchain)
         (setf callchain `(,mixin ,callchain)))
 
       `(def-fixture ,name ,arglist
-         (macrolet ((eval-body () '(progn ,@body)))
+         (macrolet ((,g!eval-body () '(progn ,@body)))
            ,callchain))))
-
