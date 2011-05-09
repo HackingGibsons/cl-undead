@@ -27,3 +27,16 @@
 
     (is (member (car spans-test) spans-all))
     (is (member (car spans-wrapped) spans-all))))
+
+(test (can-get-node-id :fixture html/simple)
+  (fail "TODO: Get a node, test the id"))
+
+(test (can-get-all-node-attributes :fixture html/simple)
+  (fail "TODO: Get a node, test the plist of attrs"))
+
+(test (can-get-node-data :fixture html/simple)
+  (fail "TODO: Get a node, test that we can get the text contained within"))
+
+(test (can-set-node-data :fixture html/simple+lhtml)
+  (fail "TODO: Get a node, change the content, make sure it happend")
+  (fail "TODO: Make sure that updating a node's contents updates it in the containing tree"))
