@@ -1,6 +1,12 @@
 ;;;; cl-undead.lisp
-
 (in-package #:cl-undead)
+
+(defun remove-node (node)
+  "Remove the given node from the tree containing it"
+  (let* ((parent (pt-parent node)) (siblings (pt-children parent)))
+    (setf (pt-children parent)
+          (remove-if (lambda (this-node) (eql this-node node)) siblings)))
+  node)
 
 (defun process-rule (tree rule)
   "Process the parsed template `tree' according to the `rule'
@@ -12,9 +18,7 @@ A processing function of nil will remove the matching node from the tree"
       (mapc #'(lambda (match)
                 (if proc
                     (funcall proc match)
-                    (let* ((parent (pt-parent match)) (siblings (pt-children parent)))
-                      (setf (pt-children parent)
-                            (remove-if (lambda (node) (eql node match)) siblings)))))
+                    (remove-node match)))
             matches))))
 
 (defun process-template (template &rest rules)
