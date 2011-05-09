@@ -31,22 +31,27 @@ given by `rules' in the form (((CSS-PATH :selector :description) TREE-TRANSFORMA
     parsed))
 
 ;; Helpers
-(defun get-node-id (node)
+(defun node-id (node)
   (let ((attrs (pt-attrs node)))
     (and (listp attrs)
          (getf attrs :id))))
 
 ;; find-in-tree and friends
 (defun make-named-p (name)
+  "Make a predicate matching nodes named `name'"
   (lambda (node)
     (string-equal (pt-name node) name)))
 
 (defun make-id-p (id)
+  "Make a predicate matching nodes with id `id'"
   (lambda (node)
-    (string-equal (get-node-id node) id)))
+    (string-equal (node-id node) id)))
 
 (defun find-in-tree (tree pred)
+  "Walk the tree `tree' and return nodes that match the predicate `pred'
+in a list. A nill predicate returns identity"
   (cond ((null tree) nil)
+        ((null pred) tree)
         ((funcall pred tree) `(,tree))
         (t (loop for child in (pt-children tree)
               if child appending (find-in-tree child pred)))))
