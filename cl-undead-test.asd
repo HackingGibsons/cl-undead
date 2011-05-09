@@ -2,12 +2,14 @@
   :depends-on (#:cl-undead #:fiveam)
   :components ((:module "test"
                         :components ((:file "packages")
-                                     (:file "utils" :depends-on ("packages"))
-
-                                     (:file "mixins" :depends-on ("utils"))
-                                     (:file "fixtures" :depends-on ("mixins"))
-
+                                     (:file "fixtures" :depends-on ("helpers"))
                                      (:file "suites" :depends-on ("fixtures"))
 
-                                     (:file "html" :depends-on ("suites"))
-                                     (:file "driver" :depends-on ("suites"))))))
+                                     (:module "helpers" :depends-on ("packages")
+                                              :components ((:file "utils")
+                                                           (:file "mixins" :depends-on ("utils"))))
+
+                                     (:module "tests" :depends-on ("suites")
+                                              :components ((:file "html")
+                                                           (:file "driver")))))))
+
