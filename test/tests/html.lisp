@@ -47,7 +47,12 @@
     (is (>= 4 (length span-attrs)))))
 
 (test (can-get-node-data :fixture html/simple)
-  (fail "TODO: Get a node, test that we can get the text contained within"))
+  (let* ((spans-wrapped (find-in-tree parsed-data (make-id-p :wrapped)))
+         (span-wrapped (car spans-wrapped))
+         (span-data (node-data span-wrapped)))
+
+    (is-false (not span-data))
+    (is (equal span-data "Wrapped"))))
 
 (test (can-set-node-data :fixture html/simple+lhtml)
   (fail "TODO: Get a node, change the content, make sure it happend")

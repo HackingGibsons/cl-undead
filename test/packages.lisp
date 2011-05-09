@@ -6,6 +6,7 @@
 
                           ;; Internal
                           :find-in-tree
-                          :make-named-p :make-id-p :node-id :node-attrs :node-attr
+                          :make-named-p :make-id-p
+                          :node-id :node-attrs :node-attr :node-data :node-has-data-p
                           ;; API-ish
                           :process-template))
