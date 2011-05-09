@@ -31,11 +31,20 @@
 (test (can-get-node-id :fixture html/simple)
   (let* ((spans-wrapped (find-in-tree parsed-data (make-id-p :wrapped)))
         (span-wrapped (car spans-wrapped)))
+
     (is (= (length spans-wrapped) 1))
     (is (string-equal (node-id span-wrapped) "wrapped"))))
 
 (test (can-get-all-node-attributes :fixture html/simple)
-  (fail "TODO: Get a node, test the plist of attrs"))
+  (let* ((spans-wrapped (find-in-tree parsed-data (make-id-p :wrapped)))
+         (span-wrapped (car spans-wrapped))
+         (span-attrs (node-attrs span-wrapped)))
+
+    (is-false (not span-attrs))
+
+    (is (getf span-attrs :id))
+    (is (getf span-attrs :class))
+    (is (>= 4 (length span-attrs)))))
 
 (test (can-get-node-data :fixture html/simple)
   (fail "TODO: Get a node, test that we can get the text contained within"))
