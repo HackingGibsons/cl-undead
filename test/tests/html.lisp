@@ -29,7 +29,10 @@
     (is (member (car spans-wrapped) spans-all))))
 
 (test (can-get-node-id :fixture html/simple)
-  (fail "TODO: Get a node, test the id"))
+  (let* ((spans-wrapped (find-in-tree parsed-data (make-id-p :wrapped)))
+        (span-wrapped (car spans-wrapped)))
+    (is (= (length spans-wrapped) 1))
+    (is (string-equal (node-id span-wrapped) "wrapped"))))
 
 (test (can-get-all-node-attributes :fixture html/simple)
   (fail "TODO: Get a node, test the plist of attrs"))
