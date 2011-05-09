@@ -32,9 +32,15 @@ given by `rules' in the form (((CSS-PATH :selector :description) TREE-TRANSFORMA
 
 ;; Helpers
 (defun node-id (node)
+  (node-attr node :id))
+
+(defun node-attrs (node)
   (let ((attrs (pt-attrs node)))
     (and (listp attrs)
-         (getf attrs :id))))
+         attrs)))
+
+(defun node-attr (node attr)
+  (getf (node-attrs node) attr))
 
 ;; find-in-tree and friends
 (defun make-named-p (name)
