@@ -61,6 +61,12 @@ If `first' is non-nil return the car of the result (used in `node-data'"
   (and (node-has-data-p node)
        (pt-attrs (node-data-nodes node t))))
 
+(defun set-node-data (node val)
+  (let ((node-data (node-data-nodes node t)))
+    (setf (pt-attrs node-data) val)))
+
+(defsetf node-data set-node-data)
+    
 ;; find-in-tree and friends
 (defun make-named-p (name)
   "Make a predicate matching nodes named `name'"
