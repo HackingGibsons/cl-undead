@@ -62,6 +62,7 @@ If `first' is non-nil return the car of the result (used in `node-data'"
        (pt-attrs (node-data-nodes node t))))
 
 (defun set-node-data (node val)
+  "Set the node content of the only data node child of `node'"
   (let ((node-data (node-data-nodes node t)))
     (setf (pt-attrs node-data) val)))
 
